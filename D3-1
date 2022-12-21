@@ -1,0 +1,50 @@
+# read file input and split into 2
+import string
+
+# priority_value={a:1, b:2, ... }
+# count the value only if it reappears in the second half
+# create a list of compartment 1 ={}
+# for each row, the length = len(row#)/2
+
+
+filename = 'D3-1_input.txt'
+priority_list = []
+sum = 0
+with open(filename, 'r') as fin:
+    for line in fin:
+        rucksack = [x for x in line.strip()]
+        # compartment_count
+        c = int(len(rucksack) / 2)
+        print(c)
+        # split the dict into two parts
+        # part1 = slice(c)
+        # part2 = slice(c, 2*c+1)
+
+        compartment1 = rucksack[slice(c)]
+        compartment2 = rucksack[slice(c, 2 * c + 1)]
+
+        # print(rucksack)
+        print(f'compartment1 is {compartment1}')
+        print(f'compartment2 is {compartment2}')
+
+        #find the duplicate items
+        duplicate = [item for item in compartment2 if item in compartment1]
+        # print(f"duplicate items are {duplicate}")
+
+        # remove the duplicates
+        priority = list(dict.fromkeys(duplicate))
+        p_string = priority[0]
+        print(f'p_string is {p_string}')
+
+        p_map1 = dict(zip(string.ascii_lowercase, range(1, 27)))
+        p_map2 = dict(zip(string.ascii_uppercase, range(27, 53)))
+
+        # Merge two dictionaries
+        p_map = p_map2.copy()
+        p_map.update(p_map1)
+
+        print(p_map)
+        v = p_map.get(p_string)
+
+        sum = sum + v
+        print(f'sum is {sum}')

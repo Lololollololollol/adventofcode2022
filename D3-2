@@ -1,0 +1,56 @@
+# read file input and group three lines into three lists
+import string
+filename = 'D3-1_input.txt'
+
+def load_3rucksack_group():
+    priority_list = []
+    sum = 0
+    count = 0
+    rucksack_group = {}
+    with open(filename, 'r') as fin:
+
+        for line in fin:
+            count = count +1
+            rucksack = [item for item in line.strip()]
+
+            mod = count % 3
+            if mod == 1:
+                rucksack_1 = {count: rucksack}
+                rucksack_group.update(rucksack_1)
+                print(f'rucksack_1 is {rucksack_group[count]}')
+            elif mod == 2:
+                rucksack_2 = {count: rucksack}
+                rucksack_group.update(rucksack_2)
+                print(f'rucksack_2 is {rucksack_group[count]}')
+            elif count % 3 == 0:
+                rucksack_3 = {count: rucksack}
+                rucksack_group.update(rucksack_3)
+                print(f'rucksack_3 is {rucksack_group[count]}')
+
+                duplicate = [item for item in rucksack_group.get(count-2) if item in rucksack_group.get(count-1) and item in rucksack_group.get(count)]
+                print(f"duplicate items are {duplicate}")
+
+                # remove the duplicates
+                priority = list(dict.fromkeys(duplicate))
+                p_string = priority[0]
+                print(f'p_string is {p_string}')
+
+                p_map1 = dict(zip(string.ascii_lowercase, range(1, 27)))
+                p_map2 = dict(zip(string.ascii_uppercase, range(27, 53)))
+
+                # Merge two dictionaries
+                p_map = p_map2.copy()
+                p_map.update(p_map1)
+
+                print(p_map)
+                v = p_map.get(p_string)
+
+                sum = sum + v
+                print(f'sum is {sum}')
+
+
+def main():
+    load_3rucksack_group()
+
+if __name__ == '__main__':
+    main()
